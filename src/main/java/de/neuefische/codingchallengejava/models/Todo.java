@@ -5,8 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "todosCollection")
-@RequiredArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class Todo {
     public enum TodoStatus{
         NEW,
@@ -27,5 +27,9 @@ public class Todo {
     @Getter
     @Setter
     private TodoStatus status = TodoStatus.NEW;
+
+    public Todo(){
+        super();
+    }
 
 }

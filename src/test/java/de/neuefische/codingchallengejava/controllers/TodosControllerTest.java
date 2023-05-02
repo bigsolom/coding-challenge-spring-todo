@@ -53,4 +53,9 @@ public class TodosControllerTest {
                 .andExpect(status().isOk());
 
     }
+
+    @Test
+    void updateTodo() throws Exception{
+
+    }
 }
