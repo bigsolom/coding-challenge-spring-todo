@@ -44,7 +44,7 @@ public class TodosControllerTest {
     }
 
     @Test
-    void updateTodoById() throws Exception{
+    void updateTodoByIdUpdatesExistingTodo() throws Exception{
         var id = "1";
         var title = "title";
         var todo = new Todo(title);
@@ -57,6 +57,30 @@ public class TodosControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title", is(title)));
 
+    }
+
+    @Test
+    void updateTodoByIdReturns404WhenTodoIsNotFound() throws Exception{
+        var id = "1";
+        var todo = new Todo("required");
+        when(todoDAL.updateTodoById(anyString(),any())).thenReturn(Optional.empty());
+        var request = put(String.format("/todos/%s", id))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(new ObjectMapper().writeValueAsString(todo));
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void updateTodoByIdReturns400WhenTheGivenTodoIsNotValid() throws Exception{
+        var id = "1";
+        var todo = new Todo();
+        when(todoDAL.updateTodoById(anyString(),any())).thenReturn(Optional.of(todo));
+        var request = put(String.format("/todos/%s", id))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(new ObjectMapper().writeValueAsString(todo));
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest());
     }
 
     @Test
