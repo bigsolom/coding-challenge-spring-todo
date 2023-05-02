@@ -15,11 +15,21 @@ Tests would be great as well.
 
 ## Setup
 
-`docker run --name mongodb -d -p 27017:27017 -v $(pwd)/mongo_data:/data/db mongodb/mongodb-community-server:6.0.5-ubi8`
+To start a `mongodb` instance locally using Docker, make sure that Docker is [installed](https://docs.docker.com/get-docker/) and running then execute:
+
+`docker run --name mongodb -d -p 27017:27017 mongodb/mongodb-community-server:6.0.5-ubi8`
+
+Create default users on the local MongoDB to authenticate the app while connecting to it
+
+1. Copy `mongodb-init.js` from the host to the docker container
 
 `docker cp src/main/resources/db/mongodb-init.js mongodb:/tmp/`
 
+2. Execute `mongosh` on the docker container
+
 `docker exec -it mongodb mongosh`
+
+3. Finally load the `mongodb-init.js` script that was copied
 
 `.load /tmp/mongodb-init.js`
 
@@ -36,3 +46,13 @@ export DATABASE_HOST=localhost
 To run the project locally, make sure that a MongoDB is started then execute:
 
 `./gradlew bootRun`
+
+## Available APIs
+
+_Note: can be moved to an API documentation tool like Swagger later_
+
+```agsl
+GET /todos
+POST /todos
+PUT /todos/{id}
+```
