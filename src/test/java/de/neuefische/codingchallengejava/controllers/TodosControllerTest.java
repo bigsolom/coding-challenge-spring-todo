@@ -10,10 +10,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,14 +45,17 @@ public class TodosControllerTest {
 
     @Test
     void updateTodoById() throws Exception{
-        var id = "644e7325228663fe1af067c4";
-        var todo = new Todo("title");
-        todo.setId(id);
+        var id = "1";
+        var title = "title";
+        var todo = new Todo(title);
+        todo.setStatus(Todo.TodoStatus.DONE);
+        when(todoDAL.updateTodoById(anyString(),any())).thenReturn(Optional.of(todo));
         var request = put(String.format("/todos/%s", id))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(new ObjectMapper().writeValueAsString(todo));
         mockMvc.perform(request)
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is(title)));
 
     }
 

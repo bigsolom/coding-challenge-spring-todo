@@ -3,9 +3,9 @@ package de.neuefische.codingchallengejava.controllers;
 import de.neuefische.codingchallengejava.daos.TodoDAL;
 import de.neuefische.codingchallengejava.models.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,11 +21,17 @@ public class TodosController {
 //    }
 
     @GetMapping(value = "")
-    public List<Todo> getAllTodos(){
-        return todoDAL.getAllTodos();
+    public ResponseEntity<List<Todo>> getAllTodos(){
+        return new ResponseEntity<>(todoDAL.getAllTodos(), HttpStatus.OK);
     }
 
-//    public Todo updateTodo(){
-//        todoRepository.findand
-//    }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Todo> updateTodo(@PathVariable("id") String id, @RequestBody Todo todo){
+        var result = todoDAL.updateTodoById(id, todo);
+        if (result.isPresent()){
+            return new ResponseEntity<>(result.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

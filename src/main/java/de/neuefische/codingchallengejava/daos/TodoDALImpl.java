@@ -30,7 +30,8 @@ public class TodoDALImpl implements TodoDAL {
         query.addCriteria(Criteria.where("id").is(id));
         var options = new FindAndModifyOptions().returnNew(true);
 
-        var updates = new Update().set("title", todo.getTitle());
+        var updates = new Update().set("title", todo.getTitle())
+                .set("status", todo.getStatus());
 
         var result = mongoTemplate.findAndModify(query, updates, options, Todo.class);
         return Optional.of(result);
