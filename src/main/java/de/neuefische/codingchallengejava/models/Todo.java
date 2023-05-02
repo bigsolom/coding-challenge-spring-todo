@@ -26,6 +26,6 @@ public class Todo {
 
     @Getter
     @Setter
-    private TodoStatus status;
+    private TodoStatus status = TodoStatus.NEW;
 
 }

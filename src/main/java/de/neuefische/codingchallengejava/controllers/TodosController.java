@@ -22,6 +22,10 @@ public class TodosController {
 
     @GetMapping(value = "")
     public List<Todo> getAllTodos(){
-        return new ArrayList<Todo>();
+        return todoRepository.findAll();
     }
+
+//    public Todo updateTodo(){
+//        todoRepository.findand
+//    }
 }

@@ -22,3 +22,9 @@ Tests would be great as well.
 `docker exec -it mongodb mongosh`
 
 `.load /tmp/mongodb-init.js`
+
+## Running locally
+
+Setup the environment variables `DATABASE_USER`, `DATABASE_PASSSWORD`, `DATABASE_HOST`
+
+`./gradlew bootRun`
