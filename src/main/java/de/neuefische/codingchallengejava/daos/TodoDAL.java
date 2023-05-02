@@ -9,4 +9,6 @@ public interface TodoDAL {
     List<Todo> getAllTodos();
 
     Optional<Todo> updateTodoById(String id, Todo todo);
+
+    Todo createTodo(Todo todo);
 }

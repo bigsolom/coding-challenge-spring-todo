@@ -25,6 +25,14 @@ Tests would be great as well.
 
 ## Running locally
 
-Setup the environment variables `DATABASE_USER`, `DATABASE_PASSSWORD`, `DATABASE_HOST`
+Setup the environment variables `DATABASE_USER`, `DATABASE_PASSSWORD`, `DATABASE_HOST`. If you used the `mongodb-init.js` file then those would be:
+
+```bash
+export DATABASE_PASSWORD=test
+export DATABASE_USER=test
+export DATABASE_HOST=localhost
+```
+
+To run the project locally, make sure that a MongoDB is started then execute:
 
 `./gradlew bootRun`

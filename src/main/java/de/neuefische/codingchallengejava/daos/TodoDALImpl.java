@@ -37,5 +37,10 @@ public class TodoDALImpl implements TodoDAL {
         return Optional.of(result);
     }
 
+    @Override
+    public Todo createTodo(Todo todo) {
+        return mongoTemplate.insert(todo);
+    }
+
 
 }

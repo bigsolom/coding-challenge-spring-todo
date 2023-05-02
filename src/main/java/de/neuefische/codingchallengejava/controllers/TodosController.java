@@ -34,4 +34,11 @@ public class TodosController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping(value = "")
+    public ResponseEntity<Todo> createTodo(@RequestBody Todo todo){
+        var result = todoDAL.createTodo(todo);
+
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
 }

@@ -40,11 +40,19 @@ public class TodoDALImplTest {
 
         var result = todoDAL.updateTodoById(todo.getId(), todo);
 
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("id").is(todo.getId()));
-//        var result = mongoTemplate.findOne(query, Todo.class);
         assertTrue(result.isPresent());
         assertEquals(newTitle, result.get().getTitle());
+    }
+
+    @Test
+    void givenAValidTodoCreateTodoAddsIt() throws Exception{
+        var todo = new Todo("title");
+
+        var result = todoDAL.createTodo(todo);
+        var actual = mongoTemplate.findById(result.getId(), Todo.class);
+        assertEquals(result.getId(), actual.getId() );
+        assertEquals(result.getTitle(), actual.getTitle());
+        assertEquals(result.getStatus(), actual.getStatus());
     }
 
     @AfterEach
