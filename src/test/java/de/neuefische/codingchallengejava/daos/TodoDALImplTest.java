@@ -35,7 +35,8 @@ public class TodoDALImplTest {
     void givenAnExistingTodoWhenUpdateIsCalledWithValidIdThenTodoIsUpdated() throws Exception{
 
         var todo = mongoTemplate.insert(new Todo("old"));
-        todo.setTitle("new");
+        var newTitle = "new";
+        todo.setTitle(newTitle);
 
         var result = todoDAL.updateTodoById(todo.getId(), todo);
 
@@ -43,7 +44,7 @@ public class TodoDALImplTest {
 //        query.addCriteria(Criteria.where("id").is(todo.getId()));
 //        var result = mongoTemplate.findOne(query, Todo.class);
         assertTrue(result.isPresent());
-        assertEquals("two", result.get().getTitle());
+        assertEquals(newTitle, result.get().getTitle());
     }
 
     @AfterEach
