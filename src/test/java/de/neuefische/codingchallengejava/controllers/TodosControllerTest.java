@@ -1,6 +1,7 @@
 package de.neuefische.codingchallengejava.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.neuefische.codingchallengejava.daos.TodoDALImpl;
 import de.neuefische.codingchallengejava.daos.TodoRepository;
 import de.neuefische.codingchallengejava.models.Todo;
 import org.junit.jupiter.api.Test;
@@ -29,11 +30,11 @@ public class TodosControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private TodoRepository todoRepository;
+    private TodoDALImpl todoDAL;
 
     @Test
     void getAllTodosReturnsListOfTodos() throws Exception{
-        when(todoRepository.findAll()).thenReturn(Stream.of(new Todo("one"), new Todo("two")).collect(Collectors.toList()));
+        when(todoDAL.getAllTodos()).thenReturn(Stream.of(new Todo("one"), new Todo("two")).collect(Collectors.toList()));
         mockMvc.perform(get("/todos")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
